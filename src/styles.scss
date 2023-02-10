@@ -1,1 +1,27 @@
 /* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+
+
+@layer components {
+  .weather {
+    @apply animate-bounce_slow xl:w-8/12 lg:w-10/12 sm:w-full;
+  }
+  .timer{
+    @apply font-bold text-gray-100 text-4xl lg:text-5xl xl:text-6xl border-b pb-1;
+  }
+  .watering{
+    @apply flex justify-evenly px-2 py-4 rounded-xl items-center font-bold gap-4 text-xl;
+  }
+  .dataCard{
+    @apply flex justify-between items-center gap-4 text-white;
+  }
+  .buttonData{
+    @apply hover:animate-bounce hover:opacity-50 border-b border-gray-600 border-opacity-40
+  }
+  .wateringCard{
+    @apply font-extralight flex justify-center items-center;
+  }
+}

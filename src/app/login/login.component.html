@@ -1,0 +1,32 @@
+<section class="flex justify-between gap-4 bg-gray-600 p-2 rounded-sm" *ngIf="!isSignedIn">
+    <h2 class="text-white font-light">Log in</h2>
+    <input class="rounded-sm border" type="text" placeholder="email" #email>
+    <input type="password" placeholder="password" #password>
+    <button (click)="onSignIn(email.value,password.value)">Log in</button>
+</section>
+
+<section class="bg-gray-600 p-2 rounded-sm font-light" *ngIf="isSignedIn">
+  <button (click)="handleLogout()">Log out</button>
+</section>
+<!--
+
+<form class="flex justify-between gap-4 bg-gray-600 p-2 rounded-sm" *ngIf="!isSignedIn">
+  <mat-form-field class="example-full-width">
+    <input class="rounded-sm border" type="email" #email matInput [formControl]="emailFormControl" [errorStateMatcher]="matcher"
+           placeholder="Ex. meno@email.sk">
+    <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+      Please enter a valid email address
+    </mat-error>
+    <mat-error *ngIf="emailFormControl.hasError('required')">
+      Email is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <mat-label>Password</mat-label>
+    <input class="rounded-sm border" type="password" #password matInput [formControl]="passwordFormControl" [errorStateMatcher]="matcher"
+           placeholder="*********">
+  </mat-form-field>
+  <button (click)="onSignIn(email.value,password.value)">Log in</button>
+</form>
+-->
+

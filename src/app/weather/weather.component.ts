@@ -1,31 +1,31 @@
-import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
-import "firebase/database";
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription, timer} from "rxjs";
 import {map, share} from "rxjs/operators";
-import {FirebaseService} from "./services/firebase.service";
+import { Moon } from "lunarphase-js";
+import {TransferDataService} from "../services/transfer-data.service";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  providers: [],
+  selector: 'app-weather',
+  templateUrl: './weather.component.html',
+  styleUrls: ['./weather.component.scss']
 })
-export class AppComponent implements OnInit,OnDestroy{
-  title = 'smartgreenhouse';
+export class WeatherComponent implements OnInit, OnDestroy{
+  subscription_data: Subscription=new Subscription();
   rxTime = new Date();
   intervalId: string | number | NodeJS.Timer | undefined;
   subscription: Subscription | undefined;
+  weather: number | undefined;
+  hours: number | undefined;
   weatherData:any;
   actualWeather:any;
+  time_hour:any;
   sunrise_hour:any;
   sunset_hour:any;
-  time_hour:any;
 
-  @Output() isLogout = new EventEmitter<void>()
-  constructor(public firebaseService: FirebaseService) {
+
+
+  constructor(private transferData: TransferDataService) {
   }
-
-
 
   getWeatherData(){
     fetch('https://api.openweathermap.org/data/2.5/weather?lat=49.00&lon=21.27&exclude=current&appid=ce9a38b3d31df31375946b72bd17f0b3')
@@ -39,6 +39,7 @@ export class AppComponent implements OnInit,OnDestroy{
     this.actualWeather = new Array(this.weatherData.weather[0].main)
     this.actualWeather=this.actualWeather.toString();
 
+
     let sunsetTime = new Date(this.weatherData.sys.sunset*1000);
     let sunriseTime = new Date(this.weatherData.sys.sunrise*1000);
     this.weatherData.sunset_time = sunsetTime.toLocaleTimeString();
@@ -46,20 +47,43 @@ export class AppComponent implements OnInit,OnDestroy{
 
     this.sunrise_hour=sunriseTime.getHours();
     this.sunset_hour=sunsetTime.getHours();
+    console.log(this.sunset_hour);
   }
 
-  // @ts-ignore
-  changeBackground():number{
-    if (((this.sunrise_hour>=this.time_hour) || (this.sunset_hour<=this.time_hour)) && (this.actualWeather!='Rain')){
+  MoonMethod():number | any{
+    let moon=Moon.lunarPhase();
+    if(moon=="New"){
       return 0;
     }
+    else if(moon=="Waxing Crescent" || moon=="First Quarter" || moon=="Waxing Gibbous" ){
+      console.log(2)
+      return 1;
+    }
+    else if(moon=="Full"){
+      return 2;
+    }
     else {
+      return 3;
+    }
+  }
+  WeatherMethod():number{
+    if((this.sunrise_hour<=this.time_hour) && (this.sunset_hour>=this.time_hour)){
+      return 0;
+    }
+    else{
       return 1;
     }
   }
 
-  ngOnInit(){
+  ngOnInit() {
+
+    this.subscription_data=this.transferData.modelDataCurrent.subscribe(data=>{
+      console.log(data.skuska)
+      console.log("weather")
+    })
+
     this.getWeatherData();
+
     // Using RxJS Timer
     this.subscription = timer(0, 1000)
       .pipe(
@@ -67,12 +91,15 @@ export class AppComponent implements OnInit,OnDestroy{
         share()
       )
       .subscribe(time => {
+        let hour = this.rxTime.getHours();
         //let minuts = this.rxTime.getMinutes();
         //let seconds = this.rxTime.getSeconds();
-        this.time_hour=this.rxTime.getHours();
+        this.weather=this.rxTime.getDate();
+        this.time_hour = hour;
         //let a = time.toLocaleString('en-US', { hour: 'numeric', hour12: false });
         //let NewTime = hour + ":" + minuts + ":" + seconds
         this.rxTime = time;
+
       });
   }
 
@@ -82,10 +109,6 @@ export class AppComponent implements OnInit,OnDestroy{
       this.subscription.unsubscribe();
     }
   }
-  logout(){
-    this.firebaseService.logout()
-    this.isLogout.emit()
-  }
+
 
 }
-

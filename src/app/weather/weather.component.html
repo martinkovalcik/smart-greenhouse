@@ -1,0 +1,13 @@
+<section>
+  <img alt="sun" class="weather" *ngIf="(actualWeather=='Clear') && (WeatherMethod()==0)" src="assets/sun.png">
+  <img alt="cloud" class="weather" *ngIf="(actualWeather=='Clouds') && (WeatherMethod()==0)" src="assets/cloud.png">
+  <img alt="cloud-sun" class="weather" *ngIf="(actualWeather=='Drizzle') && (WeatherMethod()==0)" src="assets/cloud_sun.png">
+  <img alt="mist" class="weather" *ngIf="(actualWeather=='Mist') && (WeatherMethod()==0)" src="assets/mist.png">
+  <img alt="moon-nov" class="weather" *ngIf="(MoonMethod()==0) && (WeatherMethod()==1)" src="assets/moon_nov.png">
+  <img alt="moon-stvrt" class="weather" *ngIf="(MoonMethod()==1) && (WeatherMethod()==1)" src="assets/moon_stvrt.png">
+  <img alt="moon-spln" class="weather" *ngIf="(MoonMethod()==2) && (WeatherMethod()==1)" src="assets/moon_spln.png">
+  <img alt="moon-tristvrt" class="weather" *ngIf="(MoonMethod()==3) && (WeatherMethod()==1)" src="assets/moon_tristvrt.png">
+  <img alt="rain_snow" class="weather" *ngIf="(actualWeather=='Rain' || actualWeather=='Snow') && (WeatherMethod()==0)" src="assets/rain.png">
+  <img alt="storm" class="weather" *ngIf="(actualWeather=='Thunderstorm') && (WeatherMethod()==0)" src="assets/storm.png">
+
+</section>

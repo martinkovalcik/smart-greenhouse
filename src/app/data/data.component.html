@@ -1,0 +1,68 @@
+<section class="md:pr-40 flex flex-col justify-around items-center">
+
+  <section>
+
+  </section>
+
+  <section class="bg-gray-700 border rounded-md border-gray-600 p-4">
+      <section class="flex flex-col font-extralight capitalize pb-2">
+        <section *ngIf="toggle==0">
+          <section class="flex flex-col text-4xl flex gap-4 text-white">
+            <ul>
+              <li class="text-4xl dataCard" *ngFor="let actual_data of _actualDataList; let i = index;">
+                <i class="bi bi-thermometer-half"></i> <span class="font-light">{{actual_data.temperature}}°</span>
+                <i class="bi bi-moisture "></i> <span class="font-light">{{actual_data.humidity}}%</span>
+              </li>
+            </ul>
+            <section class="text-4xl dataCard" *ngFor="let actual_data of _actualDataList; let i = index;">
+              <section class="dataCard" *ngIf="actual_data.wattering">
+                <i class="bi bi-bucket "></i>
+                <span class="wateringCard">
+                  <h1 class="text-green-500">ON</h1>
+                  <i class="bi bi-dot text-green-500 -m-2"></i>
+                </span>
+              </section>
+              <section class="dataCard" *ngIf="!actual_data.wattering">
+                <i class="bi bi-bucket "></i>
+                <span class="wateringCard">
+                  <h1 class="text-red-500">OFF</h1>
+                  <i class="bi bi-dot text-red-500 -m-2"></i>
+                </span>
+              </section>
+              <section class="dataCard">
+                <i class="bi bi-droplet-half"></i><span class="font-light">{{moisture}}%</span>
+              </section>
+            </section>
+          </section>
+        </section >
+        <section class="pb-2" *ngIf="toggle==2">
+          <section class="flex flex-col text-4xl flex gap-4 text-white">
+            <section class="text-4xl dataCard">
+              <i class="bi bi-thermometer-half"></i> <span class="font-light">{{temperatureWeather}}°</span>
+              <i class="bi bi-moisture "></i> <span class="font-light">{{humidityWeather}}%</span>
+            </section>
+            <section class="text-4xl dataCard">
+            <i class="bi bi-sunrise"></i><span class="font-light">{{sunrise}}</span>
+            <i class="bi bi-sunset"></i><span class="font-light">{{sunset}}</span>
+            </section>
+          </section>
+        </section>
+        <section class="pb-2" *ngIf="toggle==1">
+          <ul>
+            <li class="text-4xl dataCard" *ngFor="let historical_data of _historicalDataList; let i = index;">
+              <i class="bi bi-thermometer-half"></i> <span class="font-light">{{historical_data.temperature}}°</span>
+              <i class="bi bi-moisture"></i> <span class="font-light">{{historical_data.humidity}}%</span>
+            </li>
+          </ul>
+        </section>
+      </section>
+    <section class="flex justify-center text-white gap-6 text-2xl border-t border-gray-600 border-opacity-60">
+      <button class="buttonData" (click)="toggle=0"><i class="bi bi-house"></i></button>
+      <button class="buttonData" (click)="toggle=1"><i class="bi bi-clock-history"></i></button>
+      <button class="buttonData" (click)="toggle=2"><i class="bi bi-brightness-alt-high-fill"></i></button>
+    </section>
+  </section>
+
+
+
+</section>

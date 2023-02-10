@@ -1,0 +1,20 @@
+<section class="absolute left-10 bottom-10">
+  <section *ngIf="water">
+    <a (click)="water=false">
+    <section class="bg-red-600/40 watering">
+        <img alt="water-OFF" class="w-10 h-5" src="assets/wattering_OFF.png">
+    </section>
+    </a>
+
+  </section>
+
+  <section *ngIf="!water">
+    <a (click)="water=true">
+      <section class="bg-green-600/40 watering">
+        <img alt="water-ON" class="w-10 h-5" src="assets/wattering_ON.png">
+      </section>
+    </a>
+
+  </section>
+
+</section>
