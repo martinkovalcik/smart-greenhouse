@@ -29,7 +29,7 @@ export class WatteringComponent implements OnInit {
   wattering(){
     this.water=!this.water;
     this.db.object("Lubotice/Config/wattering").set({wattering:this.water})
-    console.log(this.water)
+    window.location.reload();
   }
 
 }
