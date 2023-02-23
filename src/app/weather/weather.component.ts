@@ -78,7 +78,7 @@ export class WeatherComponent implements OnInit, OnDestroy{
   ngOnInit() {
 
     this.subscription_data=this.transferData.modelDataCurrent.subscribe(data=>{
-      console.log(data.skuska)
+      console.log(data.moisture)
       console.log("weather")
     })
 

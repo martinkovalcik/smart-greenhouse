@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {AngularFireModule} from "@angular/fire/compat"
@@ -19,6 +18,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {ErrorStateMatcher, ShowOnDirtyErrorStateMatcher} from "@angular/material/core";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -40,6 +40,7 @@ import {MatInputModule} from "@angular/material/input";
     MatFormFieldModule,
     ReactiveFormsModule,
     MatInputModule,
+    BrowserAnimationsModule,
 
   ],
   providers: [FirebaseService,{provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher}],

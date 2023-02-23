@@ -12,7 +12,7 @@ export class TransferDataService {
   private modelData = new Subject<DataTransfer>()
   modelDataCurrent = this.modelData.asObservable();
 
-  changeData(model:DataTransfer){
+  changeDataMoisture(model:DataTransfer){
     this.modelData.next(model);
   }
 }

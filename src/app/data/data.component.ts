@@ -35,9 +35,9 @@ export class DataComponent implements OnInit {
     this.getActualData();
     this.getHistoricalData();
     this.getWeatherData();
-    let ahoj: DataTransfer = new DataTransfer();
-    ahoj.skuska = 5
-    this.transferData.changeData(ahoj)
+    //let ahoj: DataTransfer = new DataTransfer();
+    //ahoj.skuska = 5
+
 
   }
 
@@ -89,6 +89,9 @@ export class DataComponent implements OnInit {
     this.moisture = this._actualDataList[0].moisture
     this.moisture = (100 - ((this.moisture / 770) * 100))
     this.moisture = parseFloat(this.moisture.toFixed(0))
+    let ahoj: DataTransfer = new DataTransfer();
+    ahoj.moisture = this.moisture;
+    this.transferData.changeDataMoisture(ahoj)
   }
 
   async getHistoricalData() {

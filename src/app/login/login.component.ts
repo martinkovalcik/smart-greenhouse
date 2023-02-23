@@ -32,11 +32,13 @@ export class LoginComponent implements OnInit {
     await this.firebaseService.signin(email,password)
     if (this.firebaseService.isLoggedIn){
       this.isSignedIn=true;
+      window.location.reload();
     }
   }
   handleLogout(){
     this.firebaseService.logout();
     this.isSignedIn=false;
+    window.location.reload();
   }
 
 }
