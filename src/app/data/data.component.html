@@ -1,8 +1,9 @@
+
+<section *ngIf="water_tank" class="absolute top-10 left-10 bg-gray-600 text-red-600 px-10 py-4 text-3xl rounded-md font-extralight">
+    Water tank is <span class="font-bold uppercase">empty!</span> Fill the water tank and reset sensor.
+</section>
+
 <section class="md:pr-40 flex flex-col justify-around items-center">
-
-  <section>
-
-  </section>
 
   <section class="bg-gray-700 border rounded-md border-gray-600 p-4">
       <section class="flex flex-col font-extralight capitalize pb-2">
@@ -15,14 +16,14 @@
               </li>
             </ul>
             <section class="text-4xl dataCard" *ngFor="let actual_data of _actualDataList; let i = index;">
-              <section class="dataCard" *ngIf="actual_data.wattering">
+              <section class="dataCard" *ngIf="wattering">
                 <i class="bi bi-bucket "></i>
                 <span class="wateringCard">
                   <h1 class="text-green-500">ON</h1>
                   <i class="bi bi-dot text-green-500 -m-2"></i>
                 </span>
               </section>
-              <section class="dataCard" *ngIf="!actual_data.wattering">
+              <section class="dataCard" *ngIf="!wattering">
                 <i class="bi bi-bucket "></i>
                 <span class="wateringCard">
                   <h1 class="text-red-500">OFF</h1>

@@ -47,7 +47,6 @@ export class WeatherComponent implements OnInit, OnDestroy{
 
     this.sunrise_hour=sunriseTime.getHours();
     this.sunset_hour=sunsetTime.getHours();
-    console.log(this.sunset_hour);
   }
 
   MoonMethod():number | any{
@@ -56,7 +55,6 @@ export class WeatherComponent implements OnInit, OnDestroy{
       return 0;
     }
     else if(moon=="Waxing Crescent" || moon=="First Quarter" || moon=="Waxing Gibbous" ){
-      console.log(2)
       return 1;
     }
     else if(moon=="Full"){
@@ -78,8 +76,6 @@ export class WeatherComponent implements OnInit, OnDestroy{
   ngOnInit() {
 
     this.subscription_data=this.transferData.modelDataCurrent.subscribe(data=>{
-      console.log(data.moisture)
-      console.log("weather")
     })
 
     this.getWeatherData();

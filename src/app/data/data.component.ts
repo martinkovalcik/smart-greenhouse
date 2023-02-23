@@ -5,6 +5,7 @@ import {ActualData} from "../models/actual-data";
 import {HistoricalData} from "../models/historical-data";
 import {TransferDataService} from "../services/transfer-data.service";
 import {DataTransfer} from "../models/data-transfer.model";
+import {Wattering} from "../models/wattering.model";
 
 @Component({
   selector: 'app-data',
@@ -16,6 +17,7 @@ export class DataComponent implements OnInit {
   title = 'smartgreenhouse';
   public _actualDataList: ActualData[] | undefined;
   public _historicalDataList: HistoricalData[] | undefined;
+  public _watteringDataList: Wattering[] | undefined;
   weatherData: any;
   actualWeather: any;
   humidityWeather: any;
@@ -24,6 +26,8 @@ export class DataComponent implements OnInit {
   sunset: any;
   toggle: number | undefined;
   moisture: any;
+  wattering: any;
+  water_tank:any;
 
   constructor(private db: AngularFireDatabase, private transferData: TransferDataService) {
 
@@ -35,6 +39,7 @@ export class DataComponent implements OnInit {
     this.getActualData();
     this.getHistoricalData();
     this.getWeatherData();
+    this.getWatteringData()
     //let ahoj: DataTransfer = new DataTransfer();
     //ahoj.skuska = 5
 
@@ -89,6 +94,7 @@ export class DataComponent implements OnInit {
     this.moisture = this._actualDataList[0].moisture
     this.moisture = (100 - ((this.moisture / 770) * 100))
     this.moisture = parseFloat(this.moisture.toFixed(0))
+    this.water_tank = this._actualDataList[0].water_tank
     let ahoj: DataTransfer = new DataTransfer();
     ahoj.moisture = this.moisture;
     this.transferData.changeDataMoisture(ahoj)
@@ -103,6 +109,19 @@ export class DataComponent implements OnInit {
     this._historicalDataList = data;
   }
 
+  async getWatteringData() {
+    let data: Wattering[];
+    await this.getWatteringFromDB().then(value => {
+      data = value as Wattering[];
+    });
+    // @ts-ignore
+    this._watteringDataList = data;
+    this.wattering=this._watteringDataList[0].wattering
+    let ahoj: DataTransfer = new DataTransfer();
+    ahoj.wattering = this.wattering
+    this.transferData.changeDataWattering(ahoj)
+  }
+
   getActualDataFromDB() {
     return new Promise((resolve) => {
       this.db.list("Lubotice/Actual").valueChanges().subscribe(value => {
@@ -111,9 +130,18 @@ export class DataComponent implements OnInit {
     });
   }
 
+
   getHistoricalDataFromDB() {
     return new Promise((resolve) => {
       this.db.list("Lubotice/Historical").valueChanges().subscribe(value => {
+        resolve(value);
+      });
+    });
+  }
+
+  getWatteringFromDB() {
+    return new Promise((resolve) => {
+      this.db.list("Lubotice/Config").valueChanges().subscribe(value => {
         resolve(value);
       });
     });
