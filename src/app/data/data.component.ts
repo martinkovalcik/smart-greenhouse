@@ -27,6 +27,7 @@ export class DataComponent implements OnInit {
   toggle: number | undefined;
   moisture: any;
   wattering: any;
+  wattering_request: any;
   water_tank:any;
 
   constructor(private db: AngularFireDatabase, private transferData: TransferDataService) {
@@ -117,9 +118,11 @@ export class DataComponent implements OnInit {
     // @ts-ignore
     this._watteringDataList = data;
     this.wattering=this._watteringDataList[0].wattering
-    let ahoj: DataTransfer = new DataTransfer();
-    ahoj.wattering = this.wattering
-    this.transferData.changeDataWattering(ahoj)
+    this.wattering_request=this._watteringDataList[0].wattering_request
+    let voda: Wattering = new Wattering();
+    voda.wattering = this.wattering
+    voda.wattering_request = this.wattering_request;
+    this.transferData.changeDataWattering(voda)
   }
 
   getActualDataFromDB() {
