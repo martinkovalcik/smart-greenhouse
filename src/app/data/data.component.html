@@ -1,5 +1,5 @@
 
-<section *ngIf="water_tank" class="absolute top-10 left-10 bg-gray-600 text-red-600 px-10 py-4 text-3xl rounded-md font-extralight">
+<section *ngIf="water_tank" class="z-10 absolute bottom-1 right-1 md:bottom-10 md:right-10 bg-red-600 text-white px-10 py-4 text-lg md:text-3xl rounded-md font-extralight">
     Water tank is <span class="font-bold uppercase">empty!</span> Fill the water tank and reset sensor.
 </section>
 
@@ -19,14 +19,14 @@
               <section class="dataCard" *ngIf="wattering">
                 <i class="bi bi-bucket "></i>
                 <span class="wateringCard">
-                  <h1 class="text-green-500">ON</h1>
+                  <span class="text-green-500">ON</span>
                   <i class="bi bi-dot text-green-500 -m-2"></i>
                 </span>
               </section>
               <section class="dataCard" *ngIf="!wattering">
                 <i class="bi bi-bucket "></i>
                 <span class="wateringCard">
-                  <h1 class="text-red-500">OFF</h1>
+                  <span class="text-red-500">OFF</span>
                   <i class="bi bi-dot text-red-500 -m-2"></i>
                 </span>
               </section>
@@ -36,7 +36,7 @@
             </section>
           </section>
         </section >
-        <section class="pb-2" *ngIf="toggle==2">
+        <section class="pb-2" *ngIf="toggle==1">
           <section class="flex flex-col text-4xl flex gap-4 text-white">
             <section class="text-4xl dataCard">
               <i class="bi bi-thermometer-half"></i> <span class="font-light">{{temperatureWeather}}°</span>
@@ -48,19 +48,10 @@
             </section>
           </section>
         </section>
-        <section class="pb-2" *ngIf="toggle==1">
-          <ul>
-            <li class="text-4xl dataCard" *ngFor="let historical_data of _historicalDataList; let i = index;">
-              <i class="bi bi-thermometer-half"></i> <span class="font-light">{{historical_data.temperature}}°</span>
-              <i class="bi bi-moisture"></i> <span class="font-light">{{historical_data.humidity}}%</span>
-            </li>
-          </ul>
-        </section>
       </section>
     <section class="flex justify-center text-white gap-6 text-2xl border-t border-gray-600 border-opacity-60">
       <button class="buttonData" (click)="toggle=0"><i class="bi bi-house"></i></button>
-      <button class="buttonData" (click)="toggle=1"><i class="bi bi-clock-history"></i></button>
-      <button class="buttonData" (click)="toggle=2"><i class="bi bi-brightness-alt-high-fill"></i></button>
+      <button class="buttonData" (click)="toggle=1"><i class="bi bi-brightness-alt-high-fill"></i></button>
     </section>
   </section>
 

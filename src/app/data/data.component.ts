@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {AngularFireDatabase} from "@angular/fire/compat/database";
 import "firebase/database";
 import {ActualData} from "../models/actual-data";
-import {HistoricalData} from "../models/historical-data";
 import {TransferDataService} from "../services/transfer-data.service";
 import {DataTransfer} from "../models/data-transfer.model";
 import {Wattering} from "../models/wattering.model";
@@ -16,7 +15,6 @@ import {Wattering} from "../models/wattering.model";
 export class DataComponent implements OnInit {
   title = 'smartgreenhouse';
   public _actualDataList: ActualData[] | undefined;
-  public _historicalDataList: HistoricalData[] | undefined;
   public _watteringDataList: Wattering[] | undefined;
   weatherData: any;
   actualWeather: any;
@@ -31,14 +29,11 @@ export class DataComponent implements OnInit {
   water_tank:any;
 
   constructor(private db: AngularFireDatabase, private transferData: TransferDataService) {
-
-    //this.db.object("users/1").set({id: 1, name: "martinko", phone: "0905789456"});
   }
 
   ngOnInit() {
     this.toggle = 0;
     this.getActualData();
-    this.getHistoricalData();
     this.getWeatherData();
     this.getWatteringData()
     //let ahoj: DataTransfer = new DataTransfer();
@@ -101,15 +96,6 @@ export class DataComponent implements OnInit {
     this.transferData.changeDataMoisture(ahoj)
   }
 
-  async getHistoricalData() {
-    let data: HistoricalData[];
-    await this.getHistoricalDataFromDB().then(value => {
-      data = value as HistoricalData[];
-    });
-    // @ts-ignore
-    this._historicalDataList = data;
-  }
-
   async getWatteringData() {
     let data: Wattering[];
     await this.getWatteringFromDB().then(value => {
@@ -134,13 +120,6 @@ export class DataComponent implements OnInit {
   }
 
 
-  getHistoricalDataFromDB() {
-    return new Promise((resolve) => {
-      this.db.list("Lubotice/Historical").valueChanges().subscribe(value => {
-        resolve(value);
-      });
-    });
-  }
 
   getWatteringFromDB() {
     return new Promise((resolve) => {

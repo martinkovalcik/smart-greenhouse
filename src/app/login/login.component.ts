@@ -19,20 +19,18 @@ export class LoginComponent implements OnInit {
 
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
   passwordFormControl = new FormControl('', [Validators.required]);
-
   matcher = new MyErrorStateMatcher();
-
   isSignedIn = false;
   constructor(public firebaseService: FirebaseService) { }
 
   ngOnInit(): void {
     this.isSignedIn = localStorage.getItem("email") !== null;
   }
-  async onSignIn(email:string,password:string){
-    await this.firebaseService.signin(email,password)
-    if (this.firebaseService.isLoggedIn){
-      this.isSignedIn=true;
-      window.location.reload();
+  onSignIn(email:string,password:string){
+      this.firebaseService.signin(email,password)
+      if (this.firebaseService.isLoggedIn){
+        this.isSignedIn=true;
+        window.location.reload();
     }
   }
   handleLogout(){

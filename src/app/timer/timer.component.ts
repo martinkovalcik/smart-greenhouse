@@ -23,11 +23,6 @@ export class TimerComponent implements OnInit, OnDestroy {
         share()
       )
       .subscribe(time => {
-        //let hour = this.rxTime.getHours();
-        //let minuts = this.rxTime.getMinutes();
-        //let seconds = this.rxTime.getSeconds();
-        //let a = time.toLocaleString('en-US', { hour: 'numeric', hour12: false });
-        //let NewTime = hour + ":" + minuts + ":" + seconds
         this.rxTime = time;
       });
   }
