@@ -1,4 +1,4 @@
-<section class="absolute left-10 bottom-10">
+<section *ngIf="!userNotLogged" class="absolute left-10 bottom-10">
   <section *ngIf="water">
     <a (click)="wattering()">
     <section class="bg-green-600/40 watering">

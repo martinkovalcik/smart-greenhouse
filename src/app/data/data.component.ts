@@ -27,12 +27,19 @@ export class DataComponent implements OnInit {
   wattering: any;
   wattering_request: any;
   water_tank:any;
+  userNotLogged:any;
 
   constructor(private db: AngularFireDatabase, private transferData: TransferDataService) {
   }
 
   ngOnInit() {
-    this.toggle = 0;
+    if(!localStorage.getItem("email")){
+      this.toggle = 1;
+      this.userNotLogged=true;
+    }else{
+      this.toggle = 0;
+      this.userNotLogged=false;
+    }
     this.getActualData();
     this.getWeatherData();
     this.getWatteringData()
