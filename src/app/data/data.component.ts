@@ -55,7 +55,6 @@ export class DataComponent implements OnInit {
       .then(response => response.json())
       .then(data => {
         this.setWeatherData(data);
-        console.log(data);
       });
   }
 
