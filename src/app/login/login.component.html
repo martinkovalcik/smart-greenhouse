@@ -2,7 +2,7 @@
   <button mat-raised-button color="warn" (click)="handleLogout()">Log out</button>
 </section>
 
-<form class="flex flex-col md:flex-row gap-0 md:gap-4 bg-gray-200 p-2 rounded-sm items-center" *ngIf="!isSignedIn">
+<form class="flex flex-col md:flex-row gap-0 md:gap-4 border border-gray-400 px-2 rounded-sm items-center" *ngIf="!isSignedIn">
   <mat-form-field>
     <mat-label class="font-extralight pl-2">Email</mat-label>
     <input placeholder="your_email@example.com" class="rounded-sm border" type="email" #email matInput [formControl]="emailFormControl" [errorStateMatcher]="matcher">
