@@ -1,8 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Subscription, timer} from "rxjs";
-import {map, share} from "rxjs/operators";
+import {Subscription} from "rxjs";
 import { Moon } from "lunarphase-js";
 import {TransferDataService} from "../services/transfer-data.service";
+import {Weather} from "../models/weather.model";
 
 @Component({
   selector: 'app-weather',
@@ -11,7 +11,6 @@ import {TransferDataService} from "../services/transfer-data.service";
 })
 export class WeatherComponent implements OnInit, OnDestroy{
   subscription_data: Subscription=new Subscription();
-  rxTime = new Date();
   intervalId: string | number | NodeJS.Timer | undefined;
   subscription: Subscription | undefined;
   weather: number | undefined;
@@ -36,9 +35,13 @@ export class WeatherComponent implements OnInit, OnDestroy{
   }
   setWeatherData(data: any){
     this.weatherData = data;
+
+    let pocasie: Weather = new Weather();
+    pocasie.weather = this.weatherData;
+    this.transferData.changeWeather(pocasie)
+
     this.actualWeather = new Array(this.weatherData.weather[0].main)
     this.actualWeather=this.actualWeather.toString();
-
 
     let sunsetTime = new Date(this.weatherData.sys.sunset*1000);
     let sunriseTime = new Date(this.weatherData.sys.sunrise*1000);
@@ -47,6 +50,7 @@ export class WeatherComponent implements OnInit, OnDestroy{
 
     this.sunrise_hour=sunriseTime.getHours();
     this.sunset_hour=sunsetTime.getHours();
+
   }
 
   MoonMethod():number | any{
@@ -75,28 +79,11 @@ export class WeatherComponent implements OnInit, OnDestroy{
 
   ngOnInit() {
 
-    this.subscription_data=this.transferData.modelDataCurrent.subscribe(data=>{
+    this.subscription_data=this.transferData.modelTimerCurrent.subscribe(data=>{
+      this.time_hour = data.time.getHours();
+      this.weather=data.time.getDate();
     })
-
     this.getWeatherData();
-
-    // Using RxJS Timer
-    this.subscription = timer(0, 1000)
-      .pipe(
-        map(() => new Date()),
-        share()
-      )
-      .subscribe(time => {
-        let hour = this.rxTime.getHours();
-        //let minuts = this.rxTime.getMinutes();
-        //let seconds = this.rxTime.getSeconds();
-        this.weather=this.rxTime.getDate();
-        this.time_hour = hour;
-        //let a = time.toLocaleString('en-US', { hour: 'numeric', hour12: false });
-        //let NewTime = hour + ":" + minuts + ":" + seconds
-        this.rxTime = time;
-
-      });
   }
 
   ngOnDestroy() {

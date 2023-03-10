@@ -2,25 +2,63 @@
   <button mat-raised-button color="warn" (click)="handleLogout()">Log out</button>
 </section>
 
-<form class="flex flex-col md:flex-row gap-0 md:gap-4 border border-gray-400 px-2 rounded-sm items-center" *ngIf="!isSignedIn">
-  <mat-form-field>
-    <mat-label class="font-extralight pl-2">Email</mat-label>
-    <input placeholder="your_email@example.com" class="rounded-sm border" type="email" #email matInput [formControl]="emailFormControl" [errorStateMatcher]="matcher">
-    <mat-error class="bg-red-300 font-extralight px-2 py-1 rounded-md" *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-      Please enter a valid email address
-    </mat-error>
-    <mat-error class="bg-red-300 font-extralight px-2 py-1 rounded-md" *ngIf="emailFormControl.hasError('required')">
-      Email is <strong>required</strong>
-    </mat-error>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label class="font-extralight pl-2">Password</mat-label>
-    <input class="rounded-sm border" type="password" #password matInput [formControl]="passwordFormControl" [errorStateMatcher]="matcher"
-           placeholder="*********">
-  </mat-form-field>
+<section class="hidden md:block">
+  <form class="flex flex-col md:flex-row gap-0 md:gap-4 border border-gray-500 px-2 rounded-sm items-center" *ngIf="!isSignedIn">
+    <mat-form-field>
+      <mat-label class="font-extralight pl-2">Email</mat-label>
+      <input placeholder="your_email@example.com" class="rounded-sm border" type="email" #email matInput [formControl]="emailFormControl" [errorStateMatcher]="matcher">
+      <mat-error class="bg-red-300 font-extralight px-2 py-1 rounded-md" *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+        Please enter a valid email address
+      </mat-error>
+      <mat-error class="bg-red-300 font-extralight px-2 py-1 rounded-md" *ngIf="emailFormControl.hasError('required')">
+        Email is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label class="font-extralight pl-2">Password</mat-label>
+      <input class="rounded-sm border" type="password" #password matInput [formControl]="passwordFormControl" [errorStateMatcher]="matcher"
+             placeholder="*********">
+    </mat-form-field>
     <a mat-raised-button color="primary" class="text-center " (click)="onSignIn(email.value,password.value)">Login</a>
-</form>
+  </form>
+</section>
 
+<section *ngIf="!showToggle && !isSignedIn" class="block md:hidden">
+  <a (click)="onToggle()">
+    <h1 class="bi bi-list text-white"></h1>
+  </a>
+
+</section>
+
+
+<section class="h-screen w-screen bg-gray-500 bg-opacity-80 flex justify-center items-center pb-80 z-10" *ngIf="showToggle">
+
+  <section *ngIf="showToggle" class="absolute right-1 top-1">
+    <a (click)="onToggle()">
+      <h1 class="bi bi-x text-white"></h1>
+    </a>
+  </section>
+
+    <form class="flex flex-col md:flex-row gap-3 py-5 bg-white border border-gray-700 px-2 rounded-md items-center" *ngIf="!isSignedIn">
+      <span class="font-extralight text-xl">LOGIN</span>
+      <mat-form-field>
+        <mat-label class="font-extralight pl-2">Email</mat-label>
+        <input placeholder="your_email@example.com" class="rounded-sm border" type="email" #email matInput [formControl]="emailFormControl" [errorStateMatcher]="matcher">
+        <mat-error class="bg-red-300 font-extralight px-2 py-1 rounded-md" *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+          Please enter a valid email address
+        </mat-error>
+        <mat-error class="bg-red-300 font-extralight px-2 py-1 rounded-md" *ngIf="emailFormControl.hasError('required')">
+          Email is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label class="font-extralight pl-2">Password</mat-label>
+        <input class="rounded-sm border" type="password" #password matInput [formControl]="passwordFormControl" [errorStateMatcher]="matcher"
+               placeholder="*********">
+      </mat-form-field>
+      <a mat-raised-button color="primary" class="text-center" (click)="onSignIn(email.value,password.value)">Login</a>
+    </form>
+</section>
 
 
 

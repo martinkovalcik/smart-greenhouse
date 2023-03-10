@@ -1,7 +1,7 @@
 <section *ngIf="!userNotLogged" class="absolute left-10 bottom-10">
   <section *ngIf="water">
     <a (click)="wattering()">
-    <section class="bg-green-600/40 watering">
+    <section class="bg-green-600/40 watering cursor-pointer">
         <img alt="water-OFF" class="w-10 h-5" src="assets/wattering_ON.png">
     </section>
     </a>
@@ -10,7 +10,7 @@
 
   <section *ngIf="!water">
     <a (click)="wattering()">
-      <section class="bg-red-600/40 watering">
+      <section class="bg-red-600/40 watering cursor-pointer">
         <img alt="water-ON" class="w-10 h-5" src="assets/wattering_OFF.png">
       </section>
     </a>

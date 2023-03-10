@@ -20,6 +20,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule} from "@angular/material/button";
+import {MatMenuModule} from "@angular/material/menu";
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import {MatButtonModule} from "@angular/material/button";
         MatInputModule,
         BrowserAnimationsModule,
         MatButtonModule,
+        MatMenuModule,
 
     ],
   providers: [FirebaseService,{provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher}],

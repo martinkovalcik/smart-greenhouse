@@ -5,6 +5,7 @@ import {ActualData} from "../models/actual-data";
 import {TransferDataService} from "../services/transfer-data.service";
 import {DataTransfer} from "../models/data-transfer.model";
 import {Wattering} from "../models/wattering.model";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-data',
@@ -16,7 +17,7 @@ export class DataComponent implements OnInit {
   title = 'smartgreenhouse';
   public _actualDataList: ActualData[] | undefined;
   public _watteringDataList: Wattering[] | undefined;
-  weatherData: any;
+  subscription_data: Subscription=new Subscription();
   actualWeather: any;
   humidityWeather: any;
   temperatureWeather: any;
@@ -40,50 +41,33 @@ export class DataComponent implements OnInit {
       this.toggle = 0;
       this.userNotLogged=false;
     }
+    this.subscription_data=this.transferData.modelWeatherCurrent.subscribe(data=>{
+      this.actualWeather = new Array(data.weather.weather[0].main)
+      let sunsetTime = new Date(data.weather.sys.sunset * 1000);
+      let sunriseTime = new Date(data.weather.sys.sunrise * 1000);
+      data.weather.sunset_time = sunsetTime.toLocaleTimeString();
+      if (sunriseTime.getMinutes() <= 9) {
+        this.sunrise = sunriseTime.getHours() + ":0" + sunriseTime.getMinutes();
+      } else {
+        this.sunrise = sunriseTime.getHours() + ":" + sunriseTime.getMinutes();
+      }
+
+      if (sunsetTime.getMinutes() <= 9) {
+        this.sunset = sunsetTime.getHours() + ":0" + sunsetTime.getMinutes();
+      } else {
+        this.sunset = sunsetTime.getHours() + ":" + sunsetTime.getMinutes();
+      }
+      data.weather.sunrise_time = sunriseTime.toLocaleTimeString();
+      let currentDate = new Date();
+      data.weather.isDay = (currentDate.getTime() < sunsetTime.getTime());
+      this.temperatureWeather = (data.weather.main.temp - 273.15).toFixed(0);
+      this.humidityWeather = data.weather.main.humidity
+      data.weather.temp_min = (data.weather.main.temp_min - 273.15).toFixed(0);
+      data.weather.temp_max = (data.weather.main.temp_max - 273.15).toFixed(0);
+    });
     this.getActualData();
-    this.getWeatherData();
-    this.getWatteringData()
-    //let ahoj: DataTransfer = new DataTransfer();
-    //ahoj.skuska = 5
-
-
+    this.getWatteringData();
   }
-
-
-  getWeatherData() {
-    fetch('https://api.openweathermap.org/data/2.5/weather?lat=49.00&lon=21.27&exclude=current&appid=ce9a38b3d31df31375946b72bd17f0b3')
-      .then(response => response.json())
-      .then(data => {
-        this.setWeatherData(data);
-      });
-  }
-
-  setWeatherData(data: any) {
-    this.weatherData = data;
-    this.actualWeather = new Array(this.weatherData.weather[0].main)
-    let sunsetTime = new Date(this.weatherData.sys.sunset * 1000);
-    let sunriseTime = new Date(this.weatherData.sys.sunrise * 1000);
-    this.weatherData.sunset_time = sunsetTime.toLocaleTimeString();
-    if (sunriseTime.getMinutes() <= 9) {
-      this.sunrise = sunriseTime.getHours() + ":0" + sunriseTime.getMinutes();
-    } else {
-      this.sunrise = sunriseTime.getHours() + ":" + sunriseTime.getMinutes();
-    }
-
-    if (sunsetTime.getMinutes() <= 9) {
-      this.sunset = sunsetTime.getHours() + ":0" + sunsetTime.getMinutes();
-    } else {
-      this.sunset = sunsetTime.getHours() + ":" + sunsetTime.getMinutes();
-    }
-    this.weatherData.sunrise_time = sunriseTime.toLocaleTimeString();
-    let currentDate = new Date();
-    this.weatherData.isDay = (currentDate.getTime() < sunsetTime.getTime());
-    this.temperatureWeather = (this.weatherData.main.temp - 273.15).toFixed(0);
-    this.humidityWeather = this.weatherData.main.humidity
-    this.weatherData.temp_min = (this.weatherData.main.temp_min - 273.15).toFixed(0);
-    this.weatherData.temp_max = (this.weatherData.main.temp_max - 273.15).toFixed(0);
-  }
-
 
   async getActualData() {
     let data: ActualData[];
@@ -97,9 +81,9 @@ export class DataComponent implements OnInit {
     this.moisture = (100 - ((this.moisture / 770) * 100))
     this.moisture = parseFloat(this.moisture.toFixed(0))
     this.water_tank = this._actualDataList[0].water_tank
-    let ahoj: DataTransfer = new DataTransfer();
-    ahoj.moisture = this.moisture;
-    this.transferData.changeDataMoisture(ahoj)
+    let vlhkost_pody: DataTransfer = new DataTransfer();
+    vlhkost_pody.moisture = this.moisture;
+    this.transferData.changeDataMoisture(vlhkost_pody)
   }
 
   async getWatteringData() {

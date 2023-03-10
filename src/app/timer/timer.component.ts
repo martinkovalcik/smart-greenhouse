@@ -1,6 +1,8 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Subscription, timer } from "rxjs";
 import { map, share } from "rxjs/operators";
+import {Timer} from "../models/timer.model";
+import {TransferDataService} from "../services/transfer-data.service";
 
 @Component({
   selector: 'app-timer',
@@ -12,7 +14,7 @@ export class TimerComponent implements OnInit, OnDestroy {
   intervalId: string | number | NodeJS.Timer | undefined;
   subscription: Subscription | undefined;
 
-  constructor() {
+  constructor(private transferData: TransferDataService) {
 
   }
 
@@ -25,6 +27,11 @@ export class TimerComponent implements OnInit, OnDestroy {
       .subscribe(time => {
         this.rxTime = time;
       });
+
+    let cas: Timer = new Timer();
+    cas.time = this.rxTime;
+    this.transferData.changeTimer(cas)
+
   }
 
   ngOnDestroy() {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FirebaseService} from "../services/firebase.service";
 import {ErrorStateMatcher} from "@angular/material/core";
 import {FormControl, FormGroupDirective, NgForm, Validators} from "@angular/forms";
@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
   passwordFormControl = new FormControl('', [Validators.required]);
   matcher = new MyErrorStateMatcher();
   isSignedIn = false;
+  showToggle: any;
   constructor(public firebaseService: FirebaseService) { }
 
   ngOnInit(): void {
@@ -38,5 +39,10 @@ export class LoginComponent implements OnInit {
     this.isSignedIn=false;
     window.location.reload();
   }
+
+  onToggle() {
+    this.showToggle = !this.showToggle;
+  }
+
 
 }
